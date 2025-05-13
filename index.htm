@@ -7,7 +7,8 @@
   <meta name="description" content="A collection of mystical writings, poems and thoughts">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/images/favicon.ico">
+  <!-- Remove assets/ reference since we're not using folders -->
+  <link rel="icon" href="favicon.ico"> 
 </head>
 <body>
   <div class="container">
@@ -28,6 +29,7 @@
     </footer>
   </div>
 
+  <!-- IMPORTANT: Only load app.js - service worker is registered FROM app.js -->
   <script src="app.js"></script>
 </body>
 </html>
