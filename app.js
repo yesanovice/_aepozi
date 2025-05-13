@@ -34,6 +34,7 @@ function displayWritings(writings) {
     
     // Fixed image handling with absolute paths
     const coverPath = writing.cover ? `./${writing.cover}` : `./${DEFAULT_COVER}`;
+    const pdfPath = `./${writing.file}`;
     
     writingCard.innerHTML = `
       <img src="${coverPath}" 
@@ -47,7 +48,7 @@ function displayWritings(writings) {
           <span>${writing.type}</span>
           <span>${formatDate(writing.date)}</span>
         </div>
-        <!-- Removed Download Button -->
+        <a href="${pdfPath}" class="download-btn" download>Download</a>
       </div>
     `;
     writingsContainer.appendChild(writingCard);
