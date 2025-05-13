@@ -1,7 +1,7 @@
 const CACHE_NAME = 'aepozi-v1';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html', // Make sure this matches the actual file name ('index.html', not 'index.htm')
+  '/index.htm',
   '/style.css',
   '/app.js',
   '/manifest.json',
@@ -13,11 +13,7 @@ const ASSETS_TO_CACHE = [
 // Install: Pre-cache essential assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
-        console.error('Error caching assets during install:', err);
-      });
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
@@ -43,7 +39,6 @@ self.addEventListener('fetch', (event) => {
       cache.match(event.request).then((cachedResponse) => {
         const fetchPromise = fetch(event.request)
           .then((networkResponse) => {
-            // Only cache responses from the same origin (prevent caching external resources)
             if (event.request.url.startsWith(self.location.origin)) {
               cache.put(event.request, networkResponse.clone());
             }
@@ -52,9 +47,6 @@ self.addEventListener('fetch', (event) => {
           .catch(() => cachedResponse); // Fallback to cache if offline
 
         return cachedResponse || fetchPromise;
-      }).catch((err) => {
-        console.error('Error fetching from cache:', err);
-        return caches.match('/offline.html'); // You can create a custom offline page if needed
       })
     )
   );
