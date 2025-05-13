@@ -2,49 +2,45 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const writingsContainer = document.getElementById('writings-container');
-const DEFAULT_COVER = 'default-cover.jpg'; // Make sure this exists in root
+const DEFAULT_COVER = 'default-cover.jpg';
 
 // Function to load writings from JSON file
 async function loadWritings() {
   try {
-    const response = await fetch('writings.json');
+    const response = await fetch('./writings.json');
     
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to load writings (Status: ${response.status})`);
     }
     
     const writings = await response.json();
+    if (!writings || writings.length === 0) {
+      showEmptyState();
+      return;
+    }
     displayWritings(writings);
     
   } catch (error) {
-    console.error('Error loading writings:', error);
-    writingsContainer.innerHTML = `
-      <div class="error-message">
-        <p>Failed to load writings. Please try again later.</p>
-        <small>${error.message}</small>
-      </div>
-    `;
+    showErrorState(error);
   }
 }
 
 function displayWritings(writings) {
   writingsContainer.innerHTML = '';
   
-  if (!writings || writings.length === 0) {
-    writingsContainer.innerHTML = `
-      <div class="empty-message">
-        <p>No writings found. The ink has dried... for now.</p>
-      </div>
-    `;
-    return;
-  }
-  
   writings.forEach(writing => {
     const writingCard = document.createElement('div');
     writingCard.className = 'writing-card';
+    
+    // Fixed image handling with absolute paths
+    const coverPath = writing.cover ? `./${writing.cover}` : `./${DEFAULT_COVER}`;
+    const pdfPath = `./${writing.file}`;
+    
     writingCard.innerHTML = `
-      <img src="${writing.cover}" alt="${writing.title}" class="writing-cover" 
-           onerror="this.onerror=null;this.src='${DEFAULT_COVER}'">
+      <img src="${coverPath}" 
+           alt="${writing.title}" 
+           class="writing-cover"
+           onerror="this.onerror=null;this.src='./${DEFAULT_COVER}'">
       <div class="writing-info">
         <h3 class="writing-title">${writing.title}</h3>
         <p class="writing-description">${writing.description}</p>
@@ -52,11 +48,29 @@ function displayWritings(writings) {
           <span>${writing.type}</span>
           <span>${formatDate(writing.date)}</span>
         </div>
-        <a href="${writing.file}" class="download-btn" download>Download</a>
+        <a href="${pdfPath}" class="download-btn" download>Download</a>
       </div>
     `;
     writingsContainer.appendChild(writingCard);
   });
+}
+
+function showEmptyState() {
+  writingsContainer.innerHTML = `
+    <div class="empty-message">
+      <p>No writings found. The ink has dried... for now.</p>
+    </div>
+  `;
+}
+
+function showErrorState(error) {
+  console.error('Error:', error);
+  writingsContainer.innerHTML = `
+    <div class="error-message">
+      <p>Failed to load content. Please refresh.</p>
+      <small>${error.message}</small>
+    </div>
+  `;
 }
 
 function formatDate(dateString) {
@@ -64,14 +78,14 @@ function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   } catch {
-    return dateString; // Fallback if date is invalid
+    return dateString;
   }
 }
 
-// Register Service Worker with scope set to root
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+    navigator.serviceWorker.register('./service-worker.js')
       .then(registration => {
         console.log('SW registered:', registration.scope);
       })
@@ -81,5 +95,5 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Initialize the app
+// Initialize
 loadWritings();
