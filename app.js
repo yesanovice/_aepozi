@@ -95,5 +95,43 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Initialize
+// PWA Install Button Logic
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('install-button');
+  if (btn) btn.style.display = 'block';
+});
+
+const installBtn = document.getElementById('install-button');
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    }
+  });
+}
+
+// iOS Fallback
+function isIOS() {
+  return /iPhone|iPad|iPod/.test(navigator.userAgent);
+}
+
+if (isIOS()) {
+  const btn = document.getElementById('install-button');
+  if (btn) {
+    btn.style.display = 'block';
+    btn.addEventListener('click', () => {
+      alert('To install the app, tap the Share icon and select "Add to Home Screen".');
+    });
+  }
+}
+
+// Initialize app
 loadWritings();
