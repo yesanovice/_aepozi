@@ -199,37 +199,59 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-/* Responsive adjustments */
+/* Floating download button style */
+#download-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 40px; /* Adjusted to not be too clingy */
+  width: 60px;
+  height: 60px;
+  background-color: #e4007f; /* Magenta */
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 9999;
+}
+
+#download-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+#download-btn:active {
+  transform: scale(0.95);
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
-  
+
   .mystic-header {
     margin-bottom: 2rem;
   }
-  
+
   .writings-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
-  .writing-card {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-}
 
-@media (max-width: 480px) {
-  .writing-cover {
-    height: 150px;
-  }
-  
-  .writing-info {
-    padding: 1rem;
+  .writing-card {
+    padding: 0.5rem;
   }
 }
