@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +8,32 @@
   <meta name="description" content="A collection of mystical writings, poems and thoughts">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
- <link rel="icon" href="favicon.png">
-
+  <link rel="icon" href="favicon.png">
 </head>
+
 <body>
   <div class="container">
     <header class="mystic-header">
       <h1>Aepozi</h1>
       <p class="subtitle">Where words dance in the moonlight</p>
     </header>
-    
+
     <main>
       <section class="writings-grid" id="writings-container">
         <!-- Dynamic content will be loaded here -->
         <div class="loading-spinner"></div>
       </section>
     </main>
-    
+
     <footer class="mystic-footer">
       <p>© <span id="year"></span> Aepozi. All writings preserved in ink and shadow.</p>
     </footer>
   </div>
+
+  <!-- Floating Download Button -->
+  <a href="path/to/your/file" id="download-btn" class="download-btn" download>
+    ⬇️
+  </a>
 
   <!-- Install Button for PWA -->
   <button id="install-button" style="
@@ -50,4 +56,5 @@
   <!-- Load app logic -->
   <script src="app.js"></script>
 </body>
+
 </html>
