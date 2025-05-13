@@ -1,29 +1,20 @@
 [
   {
-    "id": "whispers-in-the-dark",
-    "title": "Whispers in the Dark",
-    "description": "A collection of midnight thoughts and shadowed verses",
-    "cover": "assets/images/whispers-cover.jpg",
-    "file": "assets/writings/whispers-in-the-dark.pdf",
-    "date": "2023-10-15",
-    "type": "Collection"
-  },
-  {
-    "id": "lunar-elegies",
-    "title": "Lunar Elegies",
-    "description": "Poems written under the silver gaze of the moon",
-    "cover": "assets/images/lunar-cover.jpg",
-    "file": "assets/writings/lunar-elegies.pdf",
-    "date": "2023-08-22",
+    "id": "midnight-whispers",
+    "title": "Midnight Whispers",
+    "description": "Poems written between dusk and dawn",
+    "cover": "cover1.jpg",
+    "file": "writing1.pdf", 
+    "date": "2024-03-10",
     "type": "Poetry"
   },
   {
-    "id": "autumn-reflections",
-    "title": "Autumn Reflections",
-    "description": "Meditations on change and impermanence",
-    "cover": "assets/images/autumn-cover.jpg",
-    "file": "assets/writings/autumn-reflections.pdf",
-    "date": "2023-11-05",
+    "id": "shadow-thoughts",
+    "title": "Shadow Thoughts",
+    "description": "Reflections on the nature of darkness",
+    "cover": "cover2.jpg",
+    "file": "writing2.pdf",
+    "date": "2024-03-15", 
     "type": "Prose"
   }
 ]
