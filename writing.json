@@ -1,20 +1,11 @@
 [
   {
-    "id": "midnight-whispers",
-    "title": "Midnight Whispers",
-    "description": "Poems written between dusk and dawn",
-    "cover": "cover1.jpg",
+    "id": "The myth of the chase",
+    "title": "The myth of the chase",
+    "description": "Chase is never the answer",
+    "cover": "cover1.png",
     "file": "writing1.pdf", 
     "date": "2024-03-10",
-    "type": "Poetry"
-  },
-  {
-    "id": "shadow-thoughts",
-    "title": "Shadow Thoughts",
-    "description": "Reflections on the nature of darkness",
-    "cover": "cover2.jpg",
-    "file": "writing2.pdf",
-    "date": "2024-03-15", 
-    "type": "Prose"
+    "type": "One Shot Reflective"
   }
 ]
