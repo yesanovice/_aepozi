@@ -2,6 +2,7 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const writingsContainer = document.getElementById('writings-container');
+const DEFAULT_COVER = 'default-cover.jpg'; // Make sure this exists in root
 
 // Function to load writings from JSON file
 async function loadWritings() {
@@ -9,7 +10,7 @@ async function loadWritings() {
     const response = await fetch('writings.json');
     
     if (!response.ok) {
-      throw new Error('Failed to load writings');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     
     const writings = await response.json();
@@ -20,7 +21,7 @@ async function loadWritings() {
     writingsContainer.innerHTML = `
       <div class="error-message">
         <p>Failed to load writings. Please try again later.</p>
-        <p>Error: ${error.message}</p>
+        <small>${error.message}</small>
       </div>
     `;
   }
@@ -42,7 +43,8 @@ function displayWritings(writings) {
     const writingCard = document.createElement('div');
     writingCard.className = 'writing-card';
     writingCard.innerHTML = `
-      <img src="${writing.cover}" alt="${writing.title}" class="writing-cover" onerror="this.src='assets/images/default-cover.jpg'">
+      <img src="${writing.cover}" alt="${writing.title}" class="writing-cover" 
+           onerror="this.onerror=null;this.src='${DEFAULT_COVER}'">
       <div class="writing-info">
         <h3 class="writing-title">${writing.title}</h3>
         <p class="writing-description">${writing.description}</p>
@@ -58,19 +60,23 @@ function displayWritings(writings) {
 }
 
 function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
+  try {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  } catch {
+    return dateString; // Fallback if date is invalid
+  }
 }
 
-// Register Service Worker
+// Register Service Worker with scope set to root
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
       .then(registration => {
-        console.log('ServiceWorker registration successful');
+        console.log('SW registered:', registration.scope);
       })
       .catch(err => {
-        console.log('ServiceWorker registration failed: ', err);
+        console.log('SW registration failed:', err);
       });
   });
 }
