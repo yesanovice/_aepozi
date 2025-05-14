@@ -16,5 +16,14 @@
     "file": "writing2.pdf", 
     "date": "2025-05-12",
     "type": "One Shot Reflective"
+  },
+  {
+    "id": "Hateful of Hollow",
+    "title": "Hateful of Hollow",
+    "description": "A life without hollow is much better",
+    "cover": "cover3.png",
+    "file": "writing3.pdf", 
+    "date": "2025-05-14",
+    "type": "One Shot Reflective"
   }
 ]
